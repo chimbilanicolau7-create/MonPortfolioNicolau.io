@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nicolau Chimbila — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f7f4ef;
+      --ink: #1a1714;
+      --soft: #6b6560;
+      --accent: #c0392b;
+      --line: #e0dbd4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ─── NAV ─────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(247,244,239,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--soft);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ─── HERO ────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      max-width: 900px;
+    }
+
+    .hero-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--soft);
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      color: var(--soft);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    .hero-links {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border: 1.5px solid var(--ink);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .btn:hover { background: var(--ink); color: var(--cream); }
+
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--soft);
+    }
+
+    .btn-ghost:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+    /* ─── SECTION ────────────────────────── */
+    section {
+      padding: 6rem 4rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+    }
+
+    /* ─── PROJECTS ───────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .project-card {
+      background: white;
+      padding: 2.5rem;
+      position: relative;
+      transition: transform 0.25s;
+      cursor: default;
+    }
+
+    .project-card:hover { transform: translateY(-4px); }
+
+    .project-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.25;
+    }
+
+    .project-desc {
+      color: var(--soft);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-pill {
+      font-size: 0.72rem;
+      padding: 0.3rem 0.7rem;
+      background: var(--cream);
+      color: var(--soft);
+      letter-spacing: 0.06em;
+    }
+
+    .badge-validation {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      background: #fff8e1;
+      color: #b7860b;
+      border: 1px solid #f0d060;
+    }
+
+    .badge-done {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-color: #a5d6a7;
+    }
+
+    /* ─── SKILLS ─────────────────────────── */
+    .skills-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 3rem;
+    }
+
+    .skill-category h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .skill-list li {
+      font-size: 0.9rem;
+      color: var(--soft);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .skill-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── A PROPOS ────────────────────────── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--soft);
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .fact {
+      border-left: 2px solid var(--accent);
+      padding-left: 1.2rem;
+    }
+
+    .fact-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    .fact-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+    }
+
+    /* ─── CONTACT ────────────────────────── */
+    .contact-inner {
+      max-width: 560px;
+    }
+
+    .contact-inner p {
+      color: var(--soft);
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      padding: 1rem 1.2rem;
+      background: white;
+      border: 1px solid var(--line);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-item:hover {
+      border-color: var(--ink);
+      transform: translateX(4px);
+    }
+
+    .contact-item-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+    }
+
+    /* ─── FOOTER ─────────────────────────── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--soft);
+    }
+
+    /* ─── ANIMATIONS ──────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ──────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">N. Chimbila</a>
+    <ul class="nav-links">
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">Étudiant BUT GEII — IUT de Troyes · 2025–2026</p>
+    <h1>Nicolau<br><em>Chimbila</em></h1>
+    <p class="hero-desc">
+      Passionné par l'électronique embarquée et la programmation, je construis des systèmes qui font le lien entre le matériel et le logiciel. En recherche d'un stage en électronique et systèmes embarqués.
+    </p>
+    <div class="hero-links">
+      <a href="#projets" class="btn">Voir mes projets</a>
+      <a href="https://eportfolio.univ-reims.fr/view/view.php?id=71544" target="_blank" class="btn btn-ghost">Portfolio Mahara</a>
+    </div>
+  </div>
+
+  <!-- PROJETS -->
+  <section id="projets">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Projets &amp; SAE</h2>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <span class="badge-validation">En cours de validation</span>
+        <span class="project-tag">SAE · Informatique Industrielle</span>
+        <h3 class="project-title">Conception d'un Multimètre</h3>
+        <p class="project-desc">
+          Conception et réalisation d'un multimètre fonctionnel : programmation d'un microcontrôleur Arduino pour la lecture et l'affichage des mesures, soudure et assemblage des composants, conception du PCB sous KiCad.
+        </p>
+        <div class="project-skills">
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">KiCad (PCB)</span>
+          <span class="skill-pill">Soudure</span>
+          <span class="skill-pill">C++</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="badge-validation">En cours de validation</span>
+        <span class="project-tag">SAE S1 · Électronique</span>
+        <h3 class="project-title">Régulation de température</h3>
+        <p class="project-desc">
+          Système de régulation Tout ou Rien avec hystérésis : capteur CTN, résistance chauffante bobinée, comparateur de seuils Thigh/Tlow. Réalisé en trinôme avec conception complète du câblage et des fonctions FA à F7.
+        </p>
+        <div class="project-skills">
+          <span class="skill-pill">Électronique analogique</span>
+          <span class="skill-pill">Régulation TOR</span>
+          <span class="skill-pill">Capteur CTN</span>
+          <span class="skill-pill">Travail d'équipe</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="badge-done">Réalisé</span>
+        <span class="project-tag">Projet Personnel · Python</span>
+        <h3 class="project-title">Bot Discord + IA</h3>
+        <p class="project-desc">
+          Bot Discord intégrant l'API OpenAI : génération d'images via DALL-E 3, plannings de révision personnalisés, réponses conversationnelles. Déployé et fonctionnel.
+        </p>
+        <div class="project-skills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">API OpenAI</span>
+          <span class="skill-pill">discord.py</span>
+          <span class="skill-pill">DALL-E 3</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="badge-done">Réalisé</span>
+        <span class="project-tag">TP · Électrotechnique</span>
+        <h3 class="project-title">Circuits magnétiques</h3>
+        <p class="project-desc">
+          Étude expérimentale des circuits magnétiques : traçé de B=f(H), mesures des pertes fer, saturation d'inductance. Utilisation d'oscilloscope, wattmètre, sonde différentielle et alternostat.
+        </p>
+        <div class="project-skills">
+          <span class="skill-pill">Oscilloscope</span>
+          <span class="skill-pill">Wattmètre</span>
+          <span class="skill-pill">Transformateur</span>
+          <span class="skill-pill">Loi de Boucherot</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="badge-done">Réalisé</span>
+        <span class="project-tag">Simulation · LTSpice</span>
+        <h3 class="project-title">Montage soustracteur</h3>
+        <p class="project-desc">
+          Simulation d'un montage amplificateur opérationnel soustracteur sous LTSpice. Analyse du comportement fréquentiel et vérification des résultats théoriques.
+        </p>
+        <div class="project-skills">
+          <span class="skill-pill">LTSpice</span>
+          <span class="skill-pill">AOP</span>
+          <span class="skill-pill">Électronique analogique</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="badge-done">Réalisé</span>
+        <span class="project-tag">Projet Personnel · Python</span>
+        <h3 class="project-title">Jeu du Juste Prix</h3>
+        <p class="project-desc">
+          Petit jeu console en Python avec système de score, gestion d'erreurs (ValueError), boucle de jeu et logique de conditions. Premier projet de programmation autonome.
+        </p>
+        <div class="project-skills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Algorithmique</span>
+          <span class="skill-pill">Gestion d'erreurs</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="competences">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Compétences</h2>
+    </div>
+
+    <div class="skills-layout">
+      <div class="skill-category reveal">
+        <h3>Électronique</h3>
+        <ul class="skill-list">
+          <li>Conception PCB sous KiCad</li>
+          <li>Simulation LTSpice</li>
+          <li>Soudure & assemblage</li>
+          <li>Circuits magnétiques</li>
+          <li>Électronique analogique</li>
+          <li>AOP (amplificateurs)</li>
+        </ul>
+      </div>
+
+      <div class="skill-category reveal">
+        <h3>Programmation</h3>
+        <ul class="skill-list">
+          <li>Arduino / C++</li>
+          <li>Python (scripts, bots)</li>
+          <li>Algorithmique</li>
+          <li>API REST (OpenAI)</li>
+          <li>discord.py</li>
+        </ul>
+      </div>
+
+      <div class="skill-category reveal">
+        <h3>Instrumentation</h3>
+        <ul class="skill-list">
+          <li>Oscilloscope</li>
+          <li>Multimètre</li>
+          <li>Wattmètre</li>
+          <li>Sonde différentielle</li>
+          <li>Alternostat</li>
+        </ul>
+      </div>
+
+      <div class="skill-category reveal">
+        <h3>Logiciels & Outils</h3>
+        <ul class="skill-list">
+          <li>KiCad</li>
+          <li>LTSpice</li>
+          <li>SimulIDE / SMBP</li>
+          <li>GitHub</li>
+          <li>Mahara (e-portfolio)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="apropos">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">À propos</h2>
+    </div>
+
+    <div class="about-layout">
+      <div class="about-text reveal">
+        <p>
+          Je m'appelle Nicolau Chimbila, étudiant en première année de BUT Génie Électrique et Informatique Industrielle à l'IUT de Troyes. Ce qui me passionne dans ce domaine, c'est le lien entre le matériel et le logiciel : concevoir un circuit, le programmer, et le voir fonctionner pour de vrai.
+        </p>
+        <p>
+          En dehors des cours, j'explore la programmation Python en autonomie — des petits jeux jusqu'à des bots Discord avec de l'IA. Je m'intéresse aussi à l'architecture des systèmes embarqués et à la réduction de la consommation énergétique dans le domaine du calcul.
+        </p>
+        <p>
+          Je suis actuellement en recherche d'un stage en électronique et systèmes embarqués pour mettre en pratique mes compétences dans un contexte professionnel.
+        </p>
+      </div>
+
+      <div class="about-facts reveal">
+        <div class="fact">
+          <div class="fact-label">Formation</div>
+          <div class="fact-value">BUT GEII — IUT de Troyes</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Année</div>
+          <div class="fact-value">1ère année · 2025–2026</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Spécialisation</div>
+          <div class="fact-value">Électronique &amp; Systèmes embarqués</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Recherche</div>
+          <div class="fact-value">Stage en électronique</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Localisation</div>
+          <div class="fact-value">Troyes, Aube (10)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+
+    <div class="contact-inner reveal">
+      <p>
+        Disponible pour un stage en électronique et systèmes embarqués. N'hésitez pas à me contacter ou à consulter mes travaux en ligne.
+      </p>
+      <div class="contact-links">
+        <a href="https://eportfolio.univ-reims.fr/view/view.php?id=71544" target="_blank" class="contact-item">
+          <div>
+            <div class="contact-item-label">Portfolio complet</div>
+            <div>Mahara URCA — CV, LM &amp; SAE</div>
+          </div>
+          <span style="margin-left:auto; color:var(--soft)">→</span>
+        </a>
+        <a href="https://github.com" target="_blank" class="contact-item">
+          <div>
+            <div class="contact-item-label">Code source</div>
+            <div>GitHub — Projets &amp; expérimentations</div>
+          </div>
+          <span style="margin-left:auto; color:var(--soft)">→</span>
+        </a>
+        <a href="mailto:[votre-email]" class="contact-item">
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div>[votre-email@etud.univ-reims.fr]</div>
+          </div>
+          <span style="margin-left:auto; color:var(--soft)">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Nicolau Chimbila</span>
+    <span>BUT GEII · IUT de Troyes</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
